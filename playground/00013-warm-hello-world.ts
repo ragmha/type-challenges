@@ -21,23 +21,24 @@
   type test = Expect<Equal<HelloWorld, string>>
   ```
 
-  Click the `Take the Challenge` button to start coding! Happy Hacking!
-
-  > View on GitHub: https://tsch.js.org/13
 */
 
 /* _____________ Your Code Here _____________ */
+export type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends <
+  T,
+>() => T extends Y ? 1 : 2
+  ? true
+  : false
 
-type HelloWorld = any // expected to be a string
+export type Expect<T extends true> = T
+export type IsAny<T> = 0 extends 1 & T ? true : false
+export type NotAny<T> = true extends IsAny<T> ? false : true
+
+type HelloWorld = string // expected to be a string
 
 /* _____________ Test Cases _____________ */
-import type { Equal, Expect, NotAny } from '@type-challenges/utils'
 
-type cases = [Expect<NotAny<HelloWorld>>, Expect<Equal<HelloWorld, string>>]
-
-/* _____________ Further Steps _____________ */
-/*
-  > Share your solutions: https://tsch.js.org/13/answer
-  > View solutions: https://tsch.js.org/13/solutions
-  > More Challenges: https://tsch.js.org
-*/
+export type cases = [
+  Expect<NotAny<HelloWorld>>,
+  Expect<Equal<HelloWorld, string>>,
+]
