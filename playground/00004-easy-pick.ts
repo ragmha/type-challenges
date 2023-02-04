@@ -26,17 +26,22 @@
   }
   ```
 
-  > View on GitHub: https://tsch.js.org/4
 */
 
 /* _____________ Your Code Here _____________ */
-
-type MyPick<T, K> = any
+type MyPick<T, K extends keyof T> = { [key in K]: T[key] }
 
 /* _____________ Test Cases _____________ */
-import type { Equal, Expect } from '@type-challenges/utils'
 
-type cases = [
+export type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends <
+  T,
+>() => T extends Y ? 1 : 2
+  ? true
+  : false
+
+export type Expect<T extends true> = T
+
+export type cases = [
   Expect<Equal<Expected1, MyPick<Todo, 'title'>>>,
   Expect<Equal<Expected2, MyPick<Todo, 'title' | 'completed'>>>,
   // @ts-expect-error
@@ -57,10 +62,3 @@ interface Expected2 {
   title: string
   completed: boolean
 }
-
-/* _____________ Further Steps _____________ */
-/*
-  > Share your solutions: https://tsch.js.org/4/answer
-  > View solutions: https://tsch.js.org/4/solutions
-  > More Challenges: https://tsch.js.org
-*/
